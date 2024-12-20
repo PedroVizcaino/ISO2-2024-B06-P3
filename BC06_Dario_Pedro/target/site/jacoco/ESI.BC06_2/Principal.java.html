@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Principal.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JunitExample Maven Webapp</a> &gt; <a href="index.source.html" class="el_package">ESI.BC06_2</a> &gt; <span class="el_source">Principal.java</span></div><h1>Principal.java</h1><pre class="source lang-java linenums">package ESI.BC06_2;
+
+<span class="nc" id="L3">public class Principal {</span>
+
+	public static void main(String[] args) {
+		
+		 // Crear un usuario ejemplo
+<span class="nc" id="L8">        Usuario usuario = new Usuario(true, false, false, true);</span>
+
+        // Crear las condiciones meteorol�gicas ejemplo
+<span class="nc" id="L11">        CondicionesMeteorologicas condiciones = new CondicionesMeteorologicas(20, 50, false);</span>
+
+        // Crear las caracter�sticas del espacio ejemplo
+<span class="nc" id="L14">        Espacio espacio = new Espacio(10, 50, false);</span>
+
+        // Obtener la recomendaci�n
+<span class="nc" id="L17">        String recomendacion = recomendarActividad(usuario, condiciones, espacio);</span>
+        
+        // Mostrar la recomendaci�n
+<span class="nc" id="L20">        System.out.println(recomendacion);</span>
+    
+<span class="nc" id="L22">	}</span>
+	 // M�todo para generar la recomendaci�n de actividad
+    public static String recomendarActividad(Usuario usuario, CondicionesMeteorologicas condiciones, Espacio espacio) {
+        // Verificaci�n del estado de salud del usuario
+<span class="fc bfc" id="L26" title="All 8 branches covered.">        if (!usuario.estaSano || usuario.tieneSintomas || usuario.contactoInfectados || !usuario.pasaporteCovid) {</span>
+<span class="fc" id="L27">            return &quot;No puedes realizar ninguna actividad.&quot;;</span>
+        }
+
+        // Condiciones meteorol�gicas
+<span class="fc" id="L31">        double temperatura = condiciones.temperatura;</span>
+<span class="fc" id="L32">        double humedad = condiciones.humedad;</span>
+<span class="fc" id="L33">        boolean precipitaciones = condiciones.precipitaciones;</span>
+
+        // Actividades basadas en condiciones meteorol�gicas
+<span class="pc bpc" id="L36" title="2 of 6 branches missed.">        if (temperatura &lt; 0 &amp;&amp; humedad &lt; 15 &amp;&amp; precipitaciones) {</span>
+<span class="fc" id="L37">            return &quot;Quedarse en casa.&quot;;</span>
+        }
+
+<span class="pc bpc" id="L40" title="5 of 6 branches missed.">        if (temperatura &lt; 0 &amp;&amp; humedad &lt; 15 &amp;&amp; !precipitaciones) {</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">            if (espacio.aforo &lt;= espacio.aforoMaximo) {</span>
+<span class="nc" id="L42">                return &quot;Puedes ir a esquiar.&quot;;</span>
+            } else {
+<span class="nc" id="L44">                return &quot;El aforo est� completo para esquiar.&quot;;</span>
+            }
+        }
+
+<span class="pc bpc" id="L48" title="4 of 6 branches missed.">        if (temperatura &gt;= 0 &amp;&amp; temperatura &lt;= 15 &amp;&amp; !precipitaciones) {</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">            if (espacio.aforo &lt;= espacio.aforoMaximo) {</span>
+<span class="nc" id="L50">                return &quot;Puedes ir a hacer senderismo.&quot;;</span>
+            } else {
+<span class="nc" id="L52">                return &quot;El aforo para senderismo est� completo.&quot;;</span>
+            }
+        }
+
+<span class="pc bpc" id="L56" title="3 of 8 branches missed.">        if (temperatura &gt;= 15 &amp;&amp; temperatura &lt;= 25 &amp;&amp; !precipitaciones &amp;&amp; humedad &lt; 60) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (!espacio.restriccionesConfinamiento) {</span>
+<span class="fc" id="L58">                return &quot;Puedes hacer turismo al aire libre.&quot;;</span>
+            } else {
+<span class="fc" id="L60">                return &quot;No se puede realizar turismo al aire libre debido a restricciones.&quot;;</span>
+            }
+        }
+
+<span class="pc bpc" id="L64" title="3 of 6 branches missed.">        if (temperatura &gt;= 25 &amp;&amp; temperatura &lt;= 35 &amp;&amp; !precipitaciones) {</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">            if (espacio.aforo &lt;= espacio.aforoMaximo) {</span>
+<span class="fc" id="L66">                return &quot;Puedes irte de ca�as.&quot;;</span>
+            } else {
+<span class="fc" id="L68">                return &quot;El establecimiento tiene problemas de aforo.&quot;;</span>
+            }
+        }
+
+<span class="nc bnc" id="L72" title="All 4 branches missed.">        if (temperatura &gt; 30 &amp;&amp; !precipitaciones) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">            if (espacio.aforo &lt;= espacio.aforoMaximo) {</span>
+<span class="nc" id="L74">                return &quot;Puedes ir a la playa o a la piscina.&quot;;</span>
+            } else {
+<span class="nc" id="L76">                return &quot;El aforo de la piscina est� completo.&quot;;</span>
+            }
+        }
+
+<span class="nc" id="L80">        return &quot;Condiciones meteorol�gicas no adecuadas para realizar actividades.&quot;;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
